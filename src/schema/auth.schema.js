@@ -1,6 +1,23 @@
 const yup = require("yup");
+const { GenderList, UserRole } = require("../helpers/user.helper");
 
-const authSchema = yup.object({
+const registrationSchema = yup.object({
+  role: yup
+    .string()
+    .required()
+    .oneOf([Object.values(UserRole), null]),
+  gender: yup
+    .string()
+    .required()
+    .oneOf([Object.values(GenderList), null]),
+  password: yup.string().min(8).max(20).required(),
+  email: yup.string().email().required(),
+  last_name: yup.string().required(),
+  first_name: yup.string().required(),
+  profile_image: yup.string(),
+});
+
+const loginSchema = yup.object({
   password: yup.string().required(),
   email: yup.string().email().required(),
 });
@@ -24,6 +41,7 @@ const resetPassword = yup.object({
   verify_code: yup.number(),
 });
 
-module.exports.AuthSchema = authSchema;
+module.exports.RegistrationSchema = registrationSchema;
+module.exports.LoginSchema = loginSchema;
 module.exports.ChangePasswordSchema = changePassword;
 module.exports.ResetPasswordSchema = resetPassword;

@@ -3,6 +3,23 @@ const { hashPassword } = require("../helpers/utility");
 const { User } = require("../models");
 
 const UserService = {
+  CreateUser: async (userAttribute) => {
+    try {
+      const user = new User({
+        first_name: userAttribute.first_name,
+        last_name: userAttribute.last_name,
+        email: userAttribute.email,
+        password: hashPassword(userAttribute.password),
+        gender: userAttribute.gender,
+        role: userAttribute.role,
+        profile_image: userAttribute.profile_image,
+        phone_number: userAttribute.phone_number,
+      });
+      return await user.save();
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
   GetUser: async (userId) => {
     try {
       const filter = { id: userId };

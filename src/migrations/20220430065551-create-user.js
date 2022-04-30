@@ -1,4 +1,4 @@
-const { UserRole } = require("../helpers/user.helper");
+const { UserRole, GenderList } = require("../helpers/user.helper");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -28,6 +28,10 @@ module.exports = {
       },
       role: {
         type: Sequelize.ENUM(Object.keys(UserRole)),
+        allowNull: false,
+      },
+      gender: {
+        type: Sequelize.ENUM(Object.keys(GenderList)),
         allowNull: false,
       },
       profile_image: {

@@ -4,6 +4,34 @@ const JwtHelper = require("../helpers/jwt.helper");
 const logger = require("../helpers/logger.helper");
 
 const AuthController = {
+  CreateUser: async (req, res) => {
+    try {
+      const userAttribute = req.body;
+      const userExist = await UserService.GetUserByEmail(userAttribute.email);
+      if (userExist) {
+        return res
+          .status(400)
+          .json({ err: "Email already taken", status: false });
+      }
+      const newUser = await UserService.CreateUser(userAttribute);
+      if (!newUser) {
+        return res
+          .status(500)
+          .json({ err: "Something went wrong", status: false });
+      }
+      return res.status(200).json({
+        data: {
+          user: newUser,
+        },
+        status: true,
+      });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
   Login: async (req, res) => {
     try {
       const { email, password } = req.body;
@@ -88,7 +116,9 @@ const AuthController = {
         .json({ err: "Incorrect current password", status: false });
     } catch (err) {
       logger.error(err);
-      return res.status(500).json({ err, status: false });
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
     }
   },
   ResetPassword: async (req, res) => {
@@ -139,7 +169,9 @@ const AuthController = {
       return res.status(404).json({ err: "User not found", status: false });
     } catch (err) {
       logger.error(err);
-      return res.status(500).json({ err, status: false });
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
     }
   },
 };

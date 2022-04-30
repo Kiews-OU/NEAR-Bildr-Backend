@@ -6,14 +6,21 @@ const Authorize = require("../middlewares/authorize.middleware");
 
 const Validation = require("../middlewares/validation.middleware");
 const {
-  AuthSchema,
+  RegistrationSchema,
+  LoginSchema,
   ChangePasswordSchema,
   ResetPasswordSchema,
 } = require("../schema/auth.schema");
 
 const { UserRole } = require("../helpers/user.helper");
 
-route.post("/login", Validation(AuthSchema), AuthController.Login);
+route.post(
+  "/create-user",
+  Validation(RegistrationSchema),
+  AuthController.CreateUser
+);
+
+route.post("/login", Validation(LoginSchema), AuthController.Login);
 
 route.put(
   "/change-password",

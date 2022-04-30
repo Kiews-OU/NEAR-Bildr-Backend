@@ -1,6 +1,6 @@
 const { Model } = require("sequelize");
 
-const { UserRole } = require("../helpers/user.helper");
+const { UserRole, GenderList } = require("../helpers/user.helper");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      gender: {
+        type: DataTypes.ENUM(Object.keys(GenderList)),
         allowNull: false,
       },
       role: {

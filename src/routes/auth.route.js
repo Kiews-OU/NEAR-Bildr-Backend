@@ -5,7 +5,11 @@ const Authenticate = require("../middlewares/authenticate.middleware");
 const Authorize = require("../middlewares/authorize.middleware");
 
 const Validation = require("../middlewares/validation.middleware");
-const { AuthSchema, ChangePasswordSchema } = require("../schema/auth.schema");
+const {
+  AuthSchema,
+  ChangePasswordSchema,
+  ResetPasswordSchema,
+} = require("../schema/auth.schema");
 
 const { UserRole } = require("../helpers/user.helper");
 
@@ -17,6 +21,12 @@ route.put(
   Authorize([UserRole.teacher, UserRole.student]),
   Validation(ChangePasswordSchema),
   AuthController.ChangePassword
+);
+
+route.post(
+  "/reset-password",
+  Validation(ResetPasswordSchema),
+  AuthController.ResetPassword
 );
 
 module.exports = route;

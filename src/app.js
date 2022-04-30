@@ -1,11 +1,12 @@
 const express = require("express");
+const session = require("express-session");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const { sequelize } = require("./models/index");
 const logger = require("./helpers/logger.helper");
 require("dotenv").config();
 
-const { ENV, PORT } = process.env;
+const { ENV, PORT, SESSION_SECRET, SESSION_LIFETIME } = process.env;
 
 const AuthRouter = require("./routes/auth.route");
 
@@ -19,6 +20,18 @@ app.use(
   })
 );
 app.use(express.json());
+
+// Session setup
+app.use(
+  session({
+    secret: SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      expires: Number(SESSION_LIFETIME),
+    },
+  })
+);
 
 app.use("/api/auth", AuthRouter);
 

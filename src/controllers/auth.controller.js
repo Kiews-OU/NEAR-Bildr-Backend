@@ -174,6 +174,45 @@ const AuthController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  GetAccessToken: async (req, res) => {
+    try {
+      const { refresh_token: refreshToken } = req.cookies;
+
+      if (!refreshToken) {
+        return res
+          .status(403)
+          .send({ message: "Authorization token required" });
+      }
+
+      const jwtPayload = await JwtHelper.VerifyJwtToken(refreshToken);
+      const user = await UserService.GetUser(jwtPayload.userId);
+      const accessToken = await JwtHelper.GenerateAccessToken(user);
+
+      const accessTokenExpiresDate = new Date();
+
+      const { digits: accessTokenLifeTime } =
+        await Utility.separateLetterAndNumber(
+          process.env.ACCESS_TOKEN_LIFETIME
+        );
+
+      accessTokenExpiresDate.setTime(
+        accessTokenExpiresDate.getTime() +
+          (accessTokenLifeTime / 24) * 60 * 1000
+      );
+
+      return res.json({
+        data: {
+          token: { expires: accessTokenExpiresDate, value: accessToken },
+        },
+        status: true,
+      });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(400)
+        .json({ err: "Invalid refresh token", status: false });
+    }
+  },
 };
 
 module.exports = AuthController;

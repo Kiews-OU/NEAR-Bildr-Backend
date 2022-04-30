@@ -6,7 +6,6 @@ const UserService = {
     try {
       const filter = { email };
       const user = await User.findOne({ where: filter });
-      console.log(user);
       return user;
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);

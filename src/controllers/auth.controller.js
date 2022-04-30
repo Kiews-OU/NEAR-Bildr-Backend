@@ -174,7 +174,7 @@ const AuthController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
-  GetAccessToken: async (req, res) => {
+  GenerateAccessToken: async (req, res) => {
     try {
       const { refresh_token: refreshToken } = req.cookies;
 

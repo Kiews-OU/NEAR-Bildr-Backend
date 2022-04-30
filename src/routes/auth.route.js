@@ -36,6 +36,6 @@ route.post(
   AuthController.ResetPassword
 );
 
-route.post("/generate-access-token", AuthController.GetAccessToken);
+route.post("/generate-access-token", AuthController.GenerateAccessToken);
 
 module.exports = route;

@@ -1,4 +1,4 @@
-const { UserRole } = require("../helpers/user.helper");
+const { UserRole, GenderList } = require("../helpers/user.helper");
 const { hashPassword } = require("../helpers/utility");
 
 module.exports = {
@@ -12,6 +12,7 @@ module.exports = {
           email: "teacher@near.org",
           password: hashPassword("nearisamazing!"),
           role: UserRole.teacher,
+          gender: GenderList.male,
           is_active: true,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
@@ -22,6 +23,7 @@ module.exports = {
           email: "student@near.org",
           password: hashPassword("nearisamazing!"),
           role: UserRole.student,
+          gender: GenderList.male,
           is_active: true,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),

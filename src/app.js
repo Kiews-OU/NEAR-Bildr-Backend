@@ -7,6 +7,8 @@ require("dotenv").config();
 
 const { ENV, PORT } = process.env;
 
+const AuthRouter = require("./routes/auth.route");
+
 const app = express();
 
 app.use(cookieParser());
@@ -17,6 +19,8 @@ app.use(
   })
 );
 app.use(express.json());
+
+app.use("/api/auth", AuthRouter);
 
 sequelize
   .authenticate()

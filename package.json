@@ -10,6 +10,8 @@
     "db:g:migration": "sequelize-cli migration:generate --name",
     "db:g:seed": "sequelize-cli seed:generate --name",
     "db:migrate": "sequelize-cli db:migrate",
+    "db:migrate:undo": "sequelize-cli db:migrate:undo --name",
+    "db:migrate:undo:all": "sequelize db:migrate:undo:all",
     "db:seeds": "sequelize-cli db:seed:all",
     "lint": "eslint --fix main.js",
     "format": "prettier -w ."

@@ -12,7 +12,7 @@ const Authenticate = async (req, res, next) => {
     const token = rest[0];
     let jwtPayload;
     if (!token) {
-      return res.status(403).send({ message: "Authorization token required" });
+      return res.status(403).json({ message: "Authorization token required" });
     }
     try {
       jwtPayload = jwt.verify(token, jwtSecret);
@@ -21,10 +21,10 @@ const Authenticate = async (req, res, next) => {
     } catch (error) {
       logger.error(error);
       // If token is not valid, respond with 401 (unauthorized)
-      return res.status(401).send({ message: "unauthorized" });
+      return res.status(401).json({ message: "unauthorized" });
     }
   } else {
-    return res.status(403).send({ message: "Authorization token required" });
+    return res.status(403).json({ message: "Authorization token required" });
   }
 };
 module.exports = Authenticate;

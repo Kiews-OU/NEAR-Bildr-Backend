@@ -65,6 +65,32 @@ const AuthController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  ChangePassword: async (req, res) => {
+    try {
+      const { current_password: currentPassword, new_password: newPassword } =
+        req.body;
+      const { userId } = await JwtHelper.GetJwtPayload(req);
+      const currentUser = await UserService.GetUser(userId);
+      if (Utility.comparePassword(currentPassword, currentUser.password)) {
+        const user = await UserService.UpdatePassword(newPassword, userId);
+        if (!user) {
+          return res
+            .status(500)
+            .json({ err: "Something went wrong", status: false });
+        }
+        return res.status(200).json({
+          message: "Password changed successfully",
+          status: true,
+        });
+      }
+      return res
+        .status(400)
+        .json({ err: "Incorrect current password", status: false });
+    } catch (err) {
+      logger.error(err);
+      return res.status(500).json({ err, status: false });
+    }
+  },
 };
 
 module.exports = AuthController;

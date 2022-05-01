@@ -9,6 +9,13 @@ const { UpdateProfileSchema } = require("../schema/user.schema");
 
 const { UserRole } = require("../helpers/user.helper");
 
+route.get(
+  "/get-user/:id",
+  Authenticate,
+  Authorize([UserRole.teacher, UserRole.student]),
+  UserController.GetUser
+);
+
 route.put(
   "/update-profile",
   Authenticate,

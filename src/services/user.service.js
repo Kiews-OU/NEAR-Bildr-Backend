@@ -13,7 +13,6 @@ const UserService = {
         gender: userAttribute.gender,
         role: userAttribute.role,
         profile_image: userAttribute.profile_image,
-        phone_number: userAttribute.phone_number,
       });
       return await user.save();
     } catch (err) {
@@ -45,6 +44,32 @@ const UserService = {
       const user = await User.update(update, {
         where: filter,
       });
+      return user;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
+  UpdateProfile: async (newAttribute, userId) => {
+    try {
+      const {
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        gender,
+        role,
+        profile_image: profileImage,
+      } = newAttribute;
+      const filter = { id: userId };
+      const update = {
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        gender,
+        role,
+        profile_image: profileImage,
+      };
+      await User.update(update, { where: filter });
+      const user = await User.findOne({ where: { id: userId } });
       return user;
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);

@@ -9,6 +9,7 @@ require("dotenv").config();
 const { ENV, PORT, SESSION_SECRET, SESSION_LIFETIME } = process.env;
 
 const AuthRouter = require("./routes/auth.route");
+const UserRouter = require("./routes/user.route");
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(
 );
 
 app.use("/api/auth", AuthRouter);
+app.use("/api/users", UserRouter);
 
 sequelize
   .authenticate()

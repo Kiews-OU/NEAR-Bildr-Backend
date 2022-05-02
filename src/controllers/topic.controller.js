@@ -1,7 +1,7 @@
 const TopicService = require("../services/topic.service");
 const logger = require("../helpers/logger.helper");
 
-const UserController = {
+const TopicController = {
   GetTopics: async (req, res) => {
     try {
       const topics = await TopicService.GetTopics();
@@ -35,4 +35,4 @@ const UserController = {
   },
 };
 
-module.exports = UserController;
+module.exports = TopicController;

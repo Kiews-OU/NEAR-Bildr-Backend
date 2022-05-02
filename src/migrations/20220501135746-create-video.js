@@ -1,19 +1,11 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Courses", {
+    await queryInterface.createTable("Videos", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },
-      teacher_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      topic_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
       },
       title: {
         type: Sequelize.STRING,
@@ -27,12 +19,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      views: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-      },
-      price: {
-        type: Sequelize.INTEGER,
+      video: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {
@@ -46,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable("Courses");
+    await queryInterface.dropTable("Videos");
   },
 };

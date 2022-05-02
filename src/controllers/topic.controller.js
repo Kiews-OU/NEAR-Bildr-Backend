@@ -17,6 +17,22 @@ const UserController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  GetSubtopics: async (req, res) => {
+    try {
+      const { topic } = req.params;
+      const subtopics = await TopicService.GetSubtopics(topic);
+      if (!subtopics)
+        return res
+          .status(500)
+          .json({ err: "Something went wrong", status: false });
+      return res.status(200).json({ data: { subtopics } });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
 };
 
 module.exports = UserController;

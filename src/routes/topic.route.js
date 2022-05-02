@@ -13,4 +13,11 @@ route.get(
   TopicController.GetTopics
 );
 
+route.get(
+  "/get-subtopics/:topic",
+  Authenticate,
+  Authorize([UserRole.student, UserRole.teacher]),
+  TopicController.GetSubtopics
+);
+
 module.exports = route;

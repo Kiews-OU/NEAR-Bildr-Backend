@@ -26,6 +26,14 @@ const CourseService = {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
+  GetCourse: async (course) => {
+    try {
+      const filter = { id: course };
+      return await Course.findOne({ where: filter });
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
 };
 
 module.exports = CourseService;

@@ -34,9 +34,26 @@ const CourseController = {
           .status(500)
           .json({ err: "Something went wrong", status: false });
       return res.status(200).json({
-        data: { course: courses },
+        data: { courses },
         status: true,
       });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
+  GetCourse: async (req, res) => {
+    try {
+      const { course: courseId } = req.params;
+      const course = await CourseService.GetCourse(courseId);
+      if (!course)
+        return res.status(404).json({
+          err: `No courses found by this id ${courseId}`,
+          status: false,
+        });
+      return res.status(200).json({ data: { course }, status: true });
     } catch (err) {
       logger.error(err);
       return res

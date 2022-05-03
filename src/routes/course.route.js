@@ -58,4 +58,11 @@ route.put(
   CourseController.UpdateCourse
 );
 
+route.delete(
+  "/delete-course/:course",
+  Authenticate,
+  Authorize([UserRole.teacher]),
+  CourseController.DeleteCourse
+);
+
 module.exports = route;

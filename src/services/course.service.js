@@ -66,6 +66,18 @@ const CourseService = {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
+  DeleteCourse: async (courseId, userId) => {
+    try {
+      const filter = { id: courseId, teacher_id: userId };
+      const course = await Course.destroy({ where: filter });
+      if (course[0] === 0) {
+        return new Error("Permission Denied");
+      }
+      return true;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
 };
 
 module.exports = CourseService;

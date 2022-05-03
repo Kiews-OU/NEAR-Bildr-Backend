@@ -102,6 +102,26 @@ const CourseController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  DeleteCourse: async (req, res) => {
+    try {
+      const { course: courseId } = req.params;
+      const { userId } = await JwtHelper.GetJwtPayload(req);
+      const deletedCourse = await CourseService.DeleteCourse(courseId, userId);
+      if (!deletedCourse) {
+        return res
+          .status(403)
+          .json({ err: "You don't have permission to delete", status: false });
+      }
+      return res
+        .status(200)
+        .json({ msg: "Course deleted successfully", status: true });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
 };
 
 module.exports = CourseController;

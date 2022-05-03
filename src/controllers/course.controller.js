@@ -122,6 +122,21 @@ const CourseController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  GetTopics: async (req, res) => {
+    try {
+      const topics = await CourseService.GetTopics();
+      if (!topics)
+        return res
+          .status(500)
+          .json({ err: "Something went wrong", status: false });
+      return res.status(200).json({ data: { topics }, status: true });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
 };
 
 module.exports = CourseController;

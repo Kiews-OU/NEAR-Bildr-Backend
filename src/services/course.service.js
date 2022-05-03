@@ -1,5 +1,5 @@
 const logger = require("../helpers/logger.helper");
-const { Course } = require("../models");
+const { Course, Topic } = require("../models");
 
 const CourseService = {
   CreateCourse: async (courseAttribute) => {
@@ -74,6 +74,14 @@ const CourseService = {
         return new Error("Permission Denied");
       }
       return true;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
+  GetTopics: async () => {
+    try {
+      const topics = await Topic.findAll({});
+      return topics;
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);
     }

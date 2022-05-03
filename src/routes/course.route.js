@@ -26,4 +26,11 @@ route.post(
   CourseController.CreateCourse
 );
 
+route.get(
+  "/get-courses/:teacher",
+  Authenticate,
+  Authorize([UserRole.student, UserRole.teacher]),
+  CourseController.GetTeacherCourses
+);
+
 module.exports = route;

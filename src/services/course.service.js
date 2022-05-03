@@ -17,6 +17,15 @@ const CourseService = {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
+  GetTeacherCourses: async (teacher) => {
+    try {
+      const filter = { teacher_id: teacher };
+      const courses = await Course.findAll({ where: filter });
+      return courses;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
 };
 
 module.exports = CourseService;

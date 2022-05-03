@@ -25,6 +25,25 @@ const CourseController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  GetTeacherCourses: async (req, res) => {
+    try {
+      const { teacher } = req.params;
+      const courses = await CourseService.GetTeacherCourses(teacher);
+      if (!courses)
+        return res
+          .status(500)
+          .json({ err: "Something went wrong", status: false });
+      return res.status(200).json({
+        data: { course: courses },
+        status: true,
+      });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
 };
 
 module.exports = CourseController;

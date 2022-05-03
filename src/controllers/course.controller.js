@@ -76,6 +76,32 @@ const CourseController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  UpdateCourse: async (req, res) => {
+    try {
+      const { course: courseId } = req.params;
+      const { userId } = await JwtHelper.GetJwtPayload(req);
+      const courseAttribute = req.body;
+      const updatedCourse = await CourseService.UpdateCourse(
+        courseId,
+        courseAttribute,
+        userId
+      );
+      if (!updatedCourse) {
+        return res
+          .status(403)
+          .json({ err: "You don't have permission to delete", status: false });
+      }
+      return res.status(200).json({
+        data: { course: updatedCourse },
+        status: true,
+      });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
 };
 
 module.exports = CourseController;

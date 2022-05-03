@@ -47,4 +47,15 @@ route.get(
   CourseController.GetCourses
 );
 
+route.put(
+  "/update-course/:course",
+  Authenticate,
+  Authorize([UserRole.teacher]),
+  SetType("thumbnails"),
+  Upload.single("thumbnail"),
+  SetUploadFileToBody,
+  Validation(CourseSchema),
+  CourseController.UpdateCourse
+);
+
 module.exports = route;

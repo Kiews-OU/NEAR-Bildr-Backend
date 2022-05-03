@@ -44,6 +44,28 @@ const CourseService = {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
+  UpdateCourse: async (courseId, courseAttribute, userId) => {
+    try {
+      const filter = { id: courseId, teacher_id: userId };
+      const update = {
+        title: courseAttribute.title,
+        thumbnail: courseAttribute.file,
+        description: courseAttribute.description,
+        price: courseAttribute.price,
+        topic_id: courseAttribute.topic_id,
+      };
+      const updatedCourse = await Course.update(update, {
+        where: filter,
+      });
+      if (updatedCourse[0] === 0) {
+        return new Error("Permission Denied");
+      }
+      const course = await Course.findOne({ where: filter });
+      return course;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
 };
 
 module.exports = CourseService;

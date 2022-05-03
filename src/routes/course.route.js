@@ -65,11 +65,4 @@ route.delete(
   CourseController.DeleteCourse
 );
 
-route.get(
-  "/get-topics",
-  Authenticate,
-  Authorize([UserRole.teacher, UserRole.student]),
-  CourseController.GetTopics
-);
-
 module.exports = route;

@@ -78,14 +78,6 @@ const CourseService = {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
-  GetTopics: async () => {
-    try {
-      const topics = await Topic.findAll({});
-      return topics;
-    } catch (err) {
-      return logger.error(`Query Execution failed: \n ${err}`);
-    }
-  },
 };
 
 module.exports = CourseService;

@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       video: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
     },
     {

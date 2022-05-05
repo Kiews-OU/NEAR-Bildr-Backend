@@ -12,6 +12,7 @@ const AuthRouter = require("./routes/auth.route");
 const UserRouter = require("./routes/user.route");
 const TopicRouter = require("./routes/topic.route");
 const CourseRouter = require("./routes/course.route");
+const VideoRouter = require("./routes/video.route");
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use("/api/auth", AuthRouter);
 app.use("/api/users", UserRouter);
 app.use("/api/topics", TopicRouter);
 app.use("/api/courses", CourseRouter);
+app.use("/api/videos", VideoRouter);
 
 sequelize
   .authenticate()

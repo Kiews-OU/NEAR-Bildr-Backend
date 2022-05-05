@@ -108,6 +108,26 @@ const CourseController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  SearchCourses: async (req, res) => {
+    try {
+      const { query } = req.params;
+      const courses = await CourseService.SearchCourses(query);
+      if (courses === null) {
+        return res.status(200).json({
+          msg: `No courses found by this query ${query}`,
+          status: true,
+        });
+      }
+      return res
+        .status(200)
+        .json({ data: { courses }, count: courses.length, status: true });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
   DeleteCourse: async (req, res) => {
     try {
       const { course: courseId } = req.params;

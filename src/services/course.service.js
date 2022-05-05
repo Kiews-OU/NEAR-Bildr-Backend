@@ -1,3 +1,6 @@
+const Sequelize = require("sequelize");
+
+const { Op } = Sequelize;
 const logger = require("../helpers/logger.helper");
 const { Course } = require("../models");
 
@@ -65,6 +68,16 @@ const CourseService = {
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
+  },
+  SearchCourses: async (query) => {
+    const courses = await Course.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${query}%`,
+        },
+      },
+    });
+    return courses;
   },
   DeleteCourse: async (courseId, userId) => {
     try {

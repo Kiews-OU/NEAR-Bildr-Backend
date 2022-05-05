@@ -58,6 +58,13 @@ route.put(
   CourseController.UpdateCourse
 );
 
+route.get(
+  "/search-courses/:query",
+  Authenticate,
+  Authorize([UserRole.teacher, UserRole.student]),
+  CourseController.SearchCourses
+);
+
 route.delete(
   "/delete-course/:course",
   Authenticate,

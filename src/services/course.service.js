@@ -41,6 +41,7 @@ const CourseService = {
     try {
       const courses = await Course.findAll({
         limit: 15,
+        order: [["views", "DESC"]],
       });
       return courses;
     } catch (err) {

@@ -25,6 +25,22 @@ const ReviewController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  GetReviews: async (req, res) => {
+    try {
+      const { course: courseId } = req.params;
+      const reviews = await ReviewService.GetReviews(courseId);
+      if (!reviews)
+        return res
+          .status(500)
+          .json({ err: "Something went wrong", status: true });
+      return res.status(200).json({ data: { reviews }, status: true });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: true });
+    }
+  },
 };
 
 module.exports = ReviewController;

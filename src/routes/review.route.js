@@ -17,4 +17,11 @@ route.post(
   ReviewController.CreateReview
 );
 
+route.get(
+  "/get-reviews/:course",
+  Authenticate,
+  Authorize([UserRole.teacher, UserRole.student]),
+  ReviewController.GetReviews
+);
+
 module.exports = route;

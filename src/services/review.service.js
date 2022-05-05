@@ -15,6 +15,14 @@ const ReviewService = {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
+  GetReviews: async (courseId) => {
+    try {
+      const reviews = await Review.findAll({ where: { course_id: courseId } });
+      return reviews;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n`);
+    }
+  },
 };
 
 module.exports = ReviewService;

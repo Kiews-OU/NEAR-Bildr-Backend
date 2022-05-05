@@ -24,6 +24,25 @@ const VideoController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  GetVideosCourse: async (req, res) => {
+    try {
+      const { course: courseId } = req.params;
+      const { userId } = await JwtHelper.GetJwtPayload(req);
+      const videos = await VideoService.GetVideos(courseId, userId);
+      if (videos.length === 0)
+        return res
+          .status(403)
+          .json({ err: "Permission Denied", status: false });
+      return res
+        .status(200)
+        .json({ data: { videos }, count: videos.length, status: true });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
   UploadVideo: async (req, res) => {
     try {
       const { video: videoId } = req.params;

@@ -1,5 +1,5 @@
 const logger = require("../helpers/logger.helper");
-const { Video, Course } = require("../models");
+const { Video, Course, CoursePurchasement } = require("../models");
 
 const VideoService = {
   CreateVideo: async (videoAttribute, userId) => {
@@ -14,6 +14,19 @@ const VideoService = {
         course_id: videoAttribute.course_id,
       });
       return await video.save();
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
+  GetVideos: async (courseId, userId) => {
+    try {
+      const filter = { user_id: userId, course_id: courseId };
+      const coursesPurchasement = await CoursePurchasement.findAll({
+        where: filter,
+      });
+      if (!coursesPurchasement) return null;
+      const videos = await Video.findAll({ where: { course_id: courseId } });
+      return videos;
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);
     }

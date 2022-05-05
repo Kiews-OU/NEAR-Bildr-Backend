@@ -7,4 +7,9 @@ const videoSchema = yup.object({
   title: yup.string().required(),
 });
 
+const uploadVideoSchema = yup.object({
+  file: yup.string().required(),
+});
+
 module.exports.VideoSchema = videoSchema;
+module.exports.UploadVideoSchema = uploadVideoSchema;

@@ -35,11 +35,23 @@ const ReviewService = {
       const updatedReview = await Review.update(update, {
         where: filter,
       });
-      if (updatedReview[0] === 0) {
+      if (updatedReview === null) {
         return new Error("Permission Denied");
       }
       const review = await Review.findOne({ where: filter });
       return review;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
+  DeleteReview: async (reviewId, userId) => {
+    try {
+      const filter = { id: reviewId, user_id: userId };
+      const review = await Review.destroy({ where: filter });
+      if (review === null) {
+        return new Error("Permission Denied");
+      }
+      return true;
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);
     }

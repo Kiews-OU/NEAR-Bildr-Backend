@@ -32,4 +32,11 @@ route.put(
   ReviewController.UpdateReview
 );
 
+route.delete(
+  "/delete-review/:review",
+  Authenticate,
+  Authorize([UserRole.teacher, UserRole.student]),
+  ReviewController.DeleteReview
+);
+
 module.exports = route;

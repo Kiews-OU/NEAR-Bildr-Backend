@@ -76,6 +76,15 @@ const CourseService = {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
+  GetMyCoursesTeacher: async (userId) => {
+    try {
+      const filter = { teacher_id: userId };
+      const courses = await Course.findAll({ where: filter });
+      return courses;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
   UpdateCourse: async (courseId, courseAttribute, userId) => {
     try {
       const filter = { id: courseId, teacher_id: userId };

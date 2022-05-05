@@ -93,6 +93,25 @@ const CourseController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  GetMyCoursesTeacher: async (req, res) => {
+    try {
+      const { userId } = await JwtHelper.GetJwtPayload(req);
+      const courses = await CourseService.GetMyCoursesTeacher(userId);
+      if (!courses)
+        return res.status(200).json({
+          msg: "There is not courses found that you published",
+          status: true,
+        });
+      return res
+        .status(200)
+        .json({ data: { courses }, count: courses.lengths, status: true });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: true });
+    }
+  },
   UpdateCourse: async (req, res) => {
     try {
       const { course: courseId } = req.params;

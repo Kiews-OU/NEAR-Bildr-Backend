@@ -29,13 +29,30 @@ const VideoController = {
       const { course: courseId } = req.params;
       const { userId } = await JwtHelper.GetJwtPayload(req);
       const videos = await VideoService.GetVideos(courseId, userId);
-      if (videos.length === 0)
+      if (videos?.length === 0 || videos === null)
         return res
           .status(403)
           .json({ err: "Permission Denied", status: false });
       return res
         .status(200)
         .json({ data: { videos }, count: videos.length, status: true });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
+  GetVideo: async (req, res) => {
+    try {
+      const { video: videoId } = req.params;
+      const { userId } = await JwtHelper.GetJwtPayload(req);
+      const video = await VideoService.GetVideo(videoId, userId);
+      if (!video)
+        return res
+          .status(403)
+          .json({ err: "Permission Denied", status: false });
+      return res.status(200).json({ data: { video }, status: true });
     } catch (err) {
       logger.error(err);
       return res

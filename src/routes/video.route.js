@@ -33,6 +33,13 @@ route.get(
   VideoController.GetVideosCourse
 );
 
+route.get(
+  "/get-video/:video",
+  Authenticate,
+  Authorize([UserRole.teacher, UserRole.student]),
+  VideoController.GetVideo
+);
+
 route.post(
   "/upload-video/:video",
   Authenticate,

@@ -21,12 +21,25 @@ const VideoService = {
   GetVideos: async (courseId, userId) => {
     try {
       const filter = { user_id: userId, course_id: courseId };
-      const coursesPurchasement = await CoursePurchasement.findAll({
+      const coursesPurchasement = await CoursePurchasement.findOne({
         where: filter,
       });
       if (!coursesPurchasement) return null;
       const videos = await Video.findAll({ where: { course_id: courseId } });
       return videos;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
+  GetVideo: async (videoId, userId) => {
+    try {
+      const video = await Video.findOne({ where: { id: videoId } });
+      const filter = { user_id: userId, course_id: video.course_id };
+      const coursesPurchasement = await CoursePurchasement.findOne({
+        where: filter,
+      });
+      if (!coursesPurchasement) return null;
+      return await Video.findOne({ where: { id: videoId } });
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);
     }

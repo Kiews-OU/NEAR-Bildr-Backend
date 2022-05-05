@@ -48,4 +48,11 @@ route.put(
   VideoController.UpdateVideo
 );
 
+route.delete(
+  "/delete-video/:video",
+  Authenticate,
+  Authorize([UserRole.teacher]),
+  VideoController.DeleteVideo
+);
+
 module.exports = route;

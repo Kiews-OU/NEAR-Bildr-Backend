@@ -73,6 +73,26 @@ const VideoController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  DeleteVideo: async (req, res) => {
+    try {
+      const { video: videoId } = req.params;
+      const { userId } = await JwtHelper.GetJwtPayload(req);
+      const deletedVideo = await VideoService.DeleteVideo(videoId, userId);
+      if (!deletedVideo) {
+        return res
+          .status(403)
+          .json({ err: "You don't have permission to delete", status: false });
+      }
+      return res
+        .status(200)
+        .json({ msg: "Video deleted successfully", status: true });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
 };
 
 module.exports = VideoController;

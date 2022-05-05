@@ -112,7 +112,7 @@ const CourseController = {
       if (updatedCourse === null) {
         return res
           .status(403)
-          .json({ err: "You don't have permission to delete", status: false });
+          .json({ err: "You don't have permission to update", status: false });
       }
       return res.status(200).json({
         data: { course: updatedCourse },

@@ -59,6 +59,18 @@ const VideoService = {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
+  DeleteVideo: async (videoId, userId) => {
+    try {
+      const video = await Video.findOne({ where: { id: videoId } });
+      const filter = { id: video.course_id, teacher_id: userId };
+      const course = await Course.findOne({ where: filter });
+      if (!course) return null;
+      await Video.destroy({ where: { id: videoId } });
+      return true;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
 };
 
 module.exports = VideoService;

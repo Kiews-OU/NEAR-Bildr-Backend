@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 
 const { Op } = Sequelize;
 const logger = require("../helpers/logger.helper");
-const { Course } = require("../models");
+const { Course, CoursePurchasement } = require("../models");
 
 const CourseService = {
   CreateCourse: async (courseAttribute) => {
@@ -42,6 +42,27 @@ const CourseService = {
       const courses = await Course.findAll({
         limit: 15,
       });
+      return courses;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
+  GetMyCourses: async (userId) => {
+    try {
+      const filter = { user_id: userId };
+      const coursesPurchasement = await CoursePurchasement.findAll({
+        where: filter,
+      });
+      const courses = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const purchase of coursesPurchasement) {
+        // eslint-disable-next-line no-await-in-loop
+        const course = await Course.findOne({
+          where: { id: purchase.course_id },
+        });
+        courses.push(course);
+      }
+      console.log(courses);
       return courses;
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);

@@ -47,6 +47,13 @@ route.get(
   CourseController.GetCourses
 );
 
+route.get(
+  "/get-my-courses",
+  Authenticate,
+  Authorize([UserRole.student, UserRole.teacher]),
+  CourseController.GetMyCourses
+);
+
 route.put(
   "/update-course/:course",
   Authenticate,

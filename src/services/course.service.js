@@ -1,5 +1,5 @@
 const logger = require("../helpers/logger.helper");
-const { Course, Topic } = require("../models");
+const { Course } = require("../models");
 
 const CourseService = {
   CreateCourse: async (courseAttribute) => {

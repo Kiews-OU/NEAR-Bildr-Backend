@@ -81,12 +81,18 @@ const CourseController = {
       const { course: courseId } = req.params;
       const { userId } = await JwtHelper.GetJwtPayload(req);
       const courseAttribute = req.body;
+      const course = await CourseService.GetCourse(courseId);
+      if (!course)
+        return res.status(404).json({
+          err: `No course found by this id ${courseId}`,
+          status: false,
+        });
       const updatedCourse = await CourseService.UpdateCourse(
         courseId,
         courseAttribute,
         userId
       );
-      if (!updatedCourse) {
+      if (updatedCourse === null) {
         return res
           .status(403)
           .json({ err: "You don't have permission to delete", status: false });

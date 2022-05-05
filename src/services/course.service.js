@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 
 const { Op } = Sequelize;
 const logger = require("../helpers/logger.helper");
-const { Course, CoursePurchasement } = require("../models");
+const { Course, CoursePurchasement, Video } = require("../models");
 
 const CourseService = {
   CreateCourse: async (courseAttribute) => {
@@ -29,10 +29,18 @@ const CourseService = {
       return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
-  GetCourse: async (course) => {
+  GetCourse: async (courseId) => {
     try {
-      const filter = { id: course };
-      return await Course.findOne({ where: filter });
+      const filter = { id: courseId };
+      const course = await Course.findOne({ where: filter });
+      if (!course) return null;
+      const update = {
+        views: course.views + 1,
+      };
+      await Course.update(update, {
+        where: filter,
+      });
+      return course;
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);
     }

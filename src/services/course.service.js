@@ -62,7 +62,6 @@ const CourseService = {
         });
         courses.push(course);
       }
-      console.log(courses);
       return courses;
     } catch (err) {
       return logger.error(`Query Execution failed: \n ${err}`);

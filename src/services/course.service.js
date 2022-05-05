@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 
 const { Op } = Sequelize;
 const logger = require("../helpers/logger.helper");
-const { Course, CoursePurchasement, Video } = require("../models");
+const { Course, CoursePurchasement } = require("../models");
 
 const CourseService = {
   CreateCourse: async (courseAttribute) => {

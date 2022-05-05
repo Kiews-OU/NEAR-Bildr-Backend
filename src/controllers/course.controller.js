@@ -48,7 +48,6 @@ const CourseController = {
     try {
       const { course: courseId } = req.params;
       const course = await CourseService.GetCourse(courseId);
-      console.log(course);
       if (!course)
         return res.status(404).json({
           err: `No courses found by this id ${courseId}`,

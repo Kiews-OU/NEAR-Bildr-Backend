@@ -41,6 +41,32 @@ const ReviewController = {
         .json({ err: "Something went wrong", status: true });
     }
   },
+  UpdateReview: async (req, res) => {
+    try {
+      const { review: reviewId } = req.params;
+      const { userId } = await JwtHelper.GetJwtPayload(req);
+      const reviewAttribute = req.body;
+      const updatedReview = await ReviewService.UpdateReview(
+        reviewId,
+        reviewAttribute,
+        userId
+      );
+      if (updatedReview === null) {
+        return res
+          .status(403)
+          .json({ err: "You don't have permission to update", status: false });
+      }
+      return res.status(200).json({
+        data: { review: updatedReview },
+        status: true,
+      });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: true });
+    }
+  },
 };
 
 module.exports = ReviewController;

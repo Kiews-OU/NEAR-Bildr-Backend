@@ -5,7 +5,7 @@ const Authenticate = require("../middlewares/authenticate.middleware");
 const Authorize = require("../middlewares/authorize.middleware");
 
 const Validation = require("../middlewares/validation.middleware");
-const { ReviewSchema } = require("../schema/review.schema");
+const { ReviewSchema, UpdateReviewSchema } = require("../schema/review.schema");
 
 const { UserRole } = require("../helpers/user.helper");
 
@@ -22,6 +22,14 @@ route.get(
   Authenticate,
   Authorize([UserRole.teacher, UserRole.student]),
   ReviewController.GetReviews
+);
+
+route.put(
+  "/update-review/:review",
+  Authenticate,
+  Authorize([UserRole.teacher, UserRole.student]),
+  Validation(UpdateReviewSchema),
+  ReviewController.UpdateReview
 );
 
 module.exports = route;

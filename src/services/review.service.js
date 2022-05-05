@@ -20,7 +20,28 @@ const ReviewService = {
       const reviews = await Review.findAll({ where: { course_id: courseId } });
       return reviews;
     } catch (err) {
-      return logger.error(`Query Execution failed: \n`);
+      return logger.error(`Query Execution failed: \n ${err}`);
+    }
+  },
+  UpdateReview: async (reviewId, reviewAttribute, userId) => {
+    try {
+      const filter = { id: reviewId, user_id: userId };
+      const update = {
+        course_id: reviewAttribute.course_id,
+        user_id: userId,
+        rating: reviewAttribute.rating,
+        description: reviewAttribute.description,
+      };
+      const updatedReview = await Review.update(update, {
+        where: filter,
+      });
+      if (updatedReview[0] === 0) {
+        return new Error("Permission Denied");
+      }
+      const review = await Review.findOne({ where: filter });
+      return review;
+    } catch (err) {
+      return logger.error(`Query Execution failed: \n ${err}`);
     }
   },
 };

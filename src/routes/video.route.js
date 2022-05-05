@@ -37,4 +37,15 @@ route.post(
   VideoController.UploadVideo
 );
 
+route.put(
+  "/update-video/:video",
+  Authenticate,
+  Authorize([UserRole.teacher]),
+  SetType("thumbnails"),
+  Upload.single("thumbnail"),
+  SetUploadFileToBody,
+  Validation(VideoSchema),
+  VideoController.UpdateVideo
+);
+
 module.exports = route;

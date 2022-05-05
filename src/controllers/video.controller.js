@@ -48,6 +48,31 @@ const VideoController = {
         .json({ err: "Something went wrong", status: false });
     }
   },
+  UpdateVideo: async (req, res) => {
+    try {
+      const { video: videoId } = req.params;
+      const { userId } = await JwtHelper.GetJwtPayload(req);
+      const videoAttribute = req.body;
+      const updatedVideo = await VideoService.UpdateVideo(
+        videoId,
+        videoAttribute,
+        userId
+      );
+      if (!updatedVideo)
+        return res
+          .status(403)
+          .json({ err: "Permission Denied", status: false });
+      return res.status(200).json({
+        data: { video: updatedVideo },
+        status: true,
+      });
+    } catch (err) {
+      logger.error(err);
+      return res
+        .status(500)
+        .json({ err: "Something went wrong", status: false });
+    }
+  },
 };
 
 module.exports = VideoController;

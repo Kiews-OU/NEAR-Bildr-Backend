@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(Topic, { foreignKey: "topic_id" });
       this.hasMany(CoursePurchasement, { foreignKey: "course_id" });
       this.hasMany(Video, { foreignKey: "course_id" });
-      this.hasMany(Review, { foreignKey: "video_id" });
+      this.hasMany(Review, { foreignKey: "course_id" });
     }
   }
   Course.init(

@@ -4,6 +4,8 @@
   </a><br/><br/>
 This is online learning community platform which integrated <strong>NEAR Protocol</strong> backend source code
 
+## Spreedsheet Docs: https://docs.google.com/spreadsheets/d/189WgYr-YKnKUu9F3gJ-RB_SlilE-7bT0Gev90oDWVmc/edit?usp=sharing
+
 ### Prerequisites
 
 * Install npm latest verison

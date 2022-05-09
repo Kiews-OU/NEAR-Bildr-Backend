@@ -58,7 +58,7 @@ const AuthController = {
       const cookieExpiresDate = new Date();
       cookieExpiresDate.setTime(
         cookieExpiresDate.getTime() +
-          Number(process.env.COOKIE_LIFETIME_IN_DAYS) * 24 * 60 * 60 * 1000
+        Number(process.env.COOKIE_LIFETIME_IN_DAYS) * 24 * 60 * 60 * 1000
       );
 
       const accessTokenExpiresDate = new Date();
@@ -70,7 +70,7 @@ const AuthController = {
 
       accessTokenExpiresDate.setTime(
         accessTokenExpiresDate.getTime() +
-          (accessTokenLifeTime / 24) * 60 * 1000
+        (accessTokenLifeTime / 24) * 60 * 1000
       );
       return res
         .cookie("refresh_token", refreshToken, {
@@ -197,7 +197,7 @@ const AuthController = {
 
       accessTokenExpiresDate.setTime(
         accessTokenExpiresDate.getTime() +
-          (accessTokenLifeTime / 24) * 60 * 1000
+        (accessTokenLifeTime / 24) * 60 * 1000
       );
 
       return res.json({

@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const { sequelize } = require("./models/index");
 const logger = require("./helpers/logger.helper");
 require("dotenv").config();
@@ -17,6 +18,13 @@ const ReviewRouter = require("./routes/review.route");
 
 const app = express();
 
+app.use(express.static("uploads"));
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(morgan(ENV));
 app.use(
